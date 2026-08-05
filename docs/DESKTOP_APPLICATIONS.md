@@ -25,7 +25,7 @@ Every desktop-facing change must inspect both implementations, define shared acc
 
 - GitHub Project: [`daedalus-fab-project` — Project 1](https://github.com/orgs/daedalus-fab/projects/1)
 - Linear project: `github.com/daedalus-fab`
-- Central registry: [`ORESoftware/project-registry`](https://github.com/ORESoftware/project-registry/blob/main/registry/desktop-applications.json)
+- Central registry: [`approved-private-registry`](private-registry://canonical/registry/desktop-applications.json)
 - Portfolio rollout: [`DEN-2469`](https://linear.app/denman/issue/DEN-2469/roll-out-paired-rust-flutter-desktop-repositories-across-the-portfolio)
 
 Repository creation, renames, transfers, archival, or platform-status changes must update this document, Linear, the central registry, and both companion repositories together.
