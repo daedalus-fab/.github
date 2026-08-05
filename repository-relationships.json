@@ -29,7 +29,7 @@
     "contains_non_public_inventory": true,
     "digest": "sha256:f8ec05963fd59438fe4ca276605fe95c78a555dc4f3be63ebf465ff510dfb472",
     "path": "owners/daedalus-fab.json",
-    "repository": "ORESoftware/project-registry"
+    "repository": "approved-private-registry"
   },
   "relationships": [
     {
