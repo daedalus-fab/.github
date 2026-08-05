@@ -30,6 +30,12 @@ The durable fabrication job program uses:
 
 A delivery issue may span repositories, but every repository change must have its own pull request and CI evidence. The Linear issue records the cross-repository outcome and dependency graph.
 
+## Delivery-program documents
+
+Program-specific documents refine this organization-wide model without replacing it:
+
+- [Meshy image-to-3D delivery program](MESHY_IMAGE_TO_3D_PROGRAM.md) — maps DEN-2465/DEN-2506 across the shared provider client, API, durable ingestion, preflight, clients, paired desktop workbenches, MCP, e2e, and GitHub Project 1.
+
 ## Required linking convention
 
 Every non-trivial branch, pull request, and merge commit must identify its Linear issue.
