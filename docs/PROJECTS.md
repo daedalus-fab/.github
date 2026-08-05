@@ -14,3 +14,7 @@ GitHub is authoritative for repositories, commits, pull requests, reviews, CI ch
 
 Documentation branches must be reviewed through pull requests and merged after checks pass. Concurrent edits are reconciled semantically against the latest default branch: this managed routing block is regenerated while all unrelated prose outside the block is preserved. Do not resolve conflicts by blindly choosing one side.
 <!-- org-project-routing:end -->
+
+## Operating playbook
+
+See [Linear and GitHub Projects operating model](LINEAR_AND_GITHUB_PROJECTS.md) for the required `DEN-####` linking convention, Project 1 fields and views, state synchronization, least-privilege integration permissions, durable job-control review gates, and troubleshooting guidance.
