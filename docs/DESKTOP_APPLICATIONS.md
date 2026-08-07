@@ -71,7 +71,7 @@ Shared schemas, clients, file formats, route fixtures, sample projects, simulate
 
 The live Flutter repository records the companion contract in [`COMPANION_DESKTOP.md`](https://github.com/daedalus-fab/daedalus-ui.dart/blob/main/COMPANION_DESKTOP.md), introduced through [PR #4](https://github.com/daedalus-fab/daedalus-ui.dart/pull/4).
 
-Central toolkit assignments: [`rust-desktop-strategies.md`](https://github.com/ORESoftware/project-registry/blob/main/docs/rust-desktop-strategies.md).
+Central toolkit assignments are maintained in the protected portfolio registry and may be referenced here only through approved opaque identifiers or public summaries.
 
 ## Project routing
 
