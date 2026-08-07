@@ -71,13 +71,13 @@ Shared schemas, clients, file formats, route fixtures, sample projects, simulate
 
 The live Flutter repository records the companion contract in [`COMPANION_DESKTOP.md`](https://github.com/daedalus-fab/daedalus-ui.dart/blob/main/COMPANION_DESKTOP.md), introduced through [PR #4](https://github.com/daedalus-fab/daedalus-ui.dart/pull/4).
 
-Central toolkit assignments: [`rust-desktop-strategies.md`](https://github.com/ORESoftware/project-registry/blob/main/docs/rust-desktop-strategies.md).
+Central toolkit assignments are maintained in the protected portfolio registry and may be referenced here only through approved opaque identifiers or public summaries.
 
 ## Project routing
 
 - GitHub Project: [`daedalus-fab-project` — Project 1](https://github.com/orgs/daedalus-fab/projects/1)
 - Linear project: `github.com/daedalus-fab`
-- Central registry: [`approved-private-registry`](private-registry://canonical/registry/desktop-applications.json)
+- Protected portfolio registry: maintained outside this public repository; public documentation must not expose private locators, credentials, or protected registry paths
 - Portfolio rollout: [`DEN-2469`](https://linear.app/denman/issue/DEN-2469/roll-out-paired-rust-flutter-desktop-repositories-across-the-portfolio)
 
-Repository creation, Flutter renaming, toolkit/FFI changes, deep-link changes, transfers, archival, or platform-status changes must update this document, Linear, the central registry/strategy, and both companion repositories together.
+Repository creation, Flutter renaming, toolkit/FFI changes, deep-link changes, transfers, archival, or platform-status changes must update this document, Linear, the protected registry/strategy, and both companion repositories together.
