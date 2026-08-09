@@ -1,0 +1,106 @@
+{
+  "$schema": "./repository-relationships.schema.json",
+  "audience": "public",
+  "generated": {
+    "complete_for_visibility": "public",
+    "generated_at": "2026-08-05T21:07:32Z",
+    "generator_version": "2026-08-04.1",
+    "inventory_digest": "sha256:190639eae0b1fe8b6ef5126b3c59a4d5221e2437a61c7f6e3eadbfd5ae294953",
+    "managed_by": "ore-repository-relationship-rollout",
+    "omitted_repository_count": 11,
+    "private_repositories_omitted": true,
+    "source": "GitHub GraphQL repository inventory plus reviewed manual declarations"
+  },
+  "owner": {
+    "account_type": "organization",
+    "dotgithub_repository": "daedalus-fab/.github",
+    "github_id": "306200852",
+    "linear_project": {
+      "id": "b0356cba-8865-40d9-82f4-48f39ca2e396",
+      "name": "github.com/daedalus-fab",
+      "team_id": "eb8ab169-5afe-4b6f-9cab-3f2aa3e887dc",
+      "url": "https://linear.app/denman/project/githubcomdaedalus-fab-6d311a6d8d19",
+      "workspace": "denman"
+    },
+    "login": "daedalus-fab",
+    "mapping_id": "context:daedalus-fab"
+  },
+  "private_registry": {
+    "contains_non_public_inventory": true,
+    "digest": "sha256:f8ec05963fd59438fe4ca276605fe95c78a555dc4f3be63ebf465ff510dfb472",
+    "path": "owners/daedalus-fab.json",
+    "repository": "approved-private-registry"
+  },
+  "relationships": [
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "daedalus-fab/.github",
+      "id": "sha256:f293f101c669b2ece7947fa45671bfd13cb0a834e76d651e81ecc3e7ea6279ec",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "daedalus-fab/daedalus-fab.github.io",
+      "type": "governs"
+    },
+    {
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "kind": "repository-name",
+          "value": "daedalus-fab.github.io"
+        }
+      ],
+      "from": "daedalus-fab/daedalus-fab.github.io",
+      "id": "sha256:b1baacc8caf4daf7c9f1c791fcff3ee9d9f904ebfc20e89ad67ac0ec0a90e383",
+      "notes": "The conventional *.github.io repository documents the organization profile.",
+      "required": false,
+      "scope": "organization",
+      "status": "inferred",
+      "to": "daedalus-fab/.github",
+      "type": "documents"
+    }
+  ],
+  "repositories": [
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "daedalus-fab/.github",
+      "github_id": "1324047422",
+      "name": ".github",
+      "owner": "daedalus-fab",
+      "roles": [
+        "community-health",
+        "governance",
+        "relationship-registry"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/daedalus-fab/.github",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "daedalus-fab/daedalus-fab.github.io",
+      "github_id": "1304025546",
+      "name": "daedalus-fab.github.io",
+      "owner": "daedalus-fab",
+      "roles": [
+        "documentation-site"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/daedalus-fab/daedalus-fab.github.io",
+      "visibility": "public"
+    }
+  ],
+  "schema_version": 1,
+  "unresolved_hints": []
+}
