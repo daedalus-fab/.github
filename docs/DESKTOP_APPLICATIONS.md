@@ -1,12 +1,12 @@
 # Desktop application allocation
 
-Verified **2026-08-06**.
+Verified **2026-08-25**.
 
 Daedalus Fab uses the paired desktop application standard:
 
-- Rust: [`daedalus-fab/daedalus-desktop.rs`](https://github.com/daedalus-fab/daedalus-desktop.rs) — **planned**, not yet verified as a published repository.
-- Flutter, current: [`daedalus-fab/daedalus-ui.dart`](https://github.com/daedalus-fab/daedalus-ui.dart) — **live**, with current native desktop coverage verified for macOS.
-- Flutter canonical rename target: `daedalus-fab/daedalus-flutter` — planned naming normalization; do not describe as published until the repository is renamed and verified.
+- Rust: [`daedalus-fab/daedalus-desktop-app.rs`](https://github.com/daedalus-fab/daedalus-desktop-app.rs) — **live** with a tested Rust security boundary and reviewed Qt 6/CXX-Qt ownership contract; native Qt packaging is not yet claimed.
+- Flutter: [`daedalus-fab/daedalus-flutter`](https://github.com/daedalus-fab/daedalus-flutter) — **live**, preserving the reviewed `daedalus-ui.dart` history; analyze and 65 unit/widget tests passed at publication.
+- Flutter predecessor: [`daedalus-fab/daedalus-ui.dart`](https://github.com/daedalus-fab/daedalus-ui.dart) — retained for history; canonical new work belongs in `daedalus-flutter`.
 
 Linux and Windows status for either implementation must be verified explicitly rather than inferred.
 
@@ -69,7 +69,7 @@ Shared schemas, clients, file formats, route fixtures, sample projects, simulate
 
 ## Repository-local documentation
 
-The live Flutter repository records the companion contract in [`COMPANION_DESKTOP.md`](https://github.com/daedalus-fab/daedalus-ui.dart/blob/main/COMPANION_DESKTOP.md), introduced through [PR #4](https://github.com/daedalus-fab/daedalus-ui.dart/pull/4).
+The canonical Flutter repository records the companion contract in [`COMPANION_DESKTOP.md`](https://github.com/daedalus-fab/daedalus-flutter/blob/main/COMPANION_DESKTOP.md). The Rust repository records the native toolkit and FFI contract in [`docs/DESKTOP_TOOLKIT.md`](https://github.com/daedalus-fab/daedalus-desktop-app.rs/blob/main/docs/DESKTOP_TOOLKIT.md).
 
 Central toolkit assignments are maintained in the protected portfolio registry and may be referenced here only through approved opaque identifiers or public summaries.
 
