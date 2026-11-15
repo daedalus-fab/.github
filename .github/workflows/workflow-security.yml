@@ -1,25 +1,22 @@
-name: Workflow supply-chain policy
+name: Workflow supply-chain and Rust script policy
 
 on:
   pull_request:
-    paths:
-      - ".github/workflows/**"
-      - "scripts/validate_workflow_security.py"
   push:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/**"
-      - "scripts/validate_workflow_security.py"
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: rust-script-policy-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Check out exact revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -30,7 +27,17 @@ jobs:
         run: |
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
-      - name: Validate immutable action references
-        run: python3 scripts/validate_workflow_security.py
-      - name: Verify policy did not mutate tracked state
+      - name: Install pinned Rust toolchain action
+        uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - name: Rust policy formatting
+        run: cargo fmt --manifest-path tools/rust-script-policy/Cargo.toml --check
+      - name: Rust policy lint
+        run: cargo clippy --manifest-path tools/rust-script-policy/Cargo.toml --all-targets -- -D warnings
+      - name: Rust policy positive and negative regression tests
+        run: cargo test --manifest-path tools/rust-script-policy/Cargo.toml --all-targets
+      - name: Forbid new Python automation and require immutable action pins
+        run: cargo run --quiet --manifest-path tools/rust-script-policy/Cargo.toml -- all .
+      - name: Verify validation did not mutate tracked state
         run: git diff --exit-code
