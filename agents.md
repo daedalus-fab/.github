@@ -83,3 +83,22 @@ This organization policy overrides generic feature-branch and worktree defaults 
 - Put every authorized worktree at `<repository-root>/tmp/worktrees/<name>`; from the repository root, use `./tmp/worktrees/<name>`. Never place worktrees beside repositories or organization directories.
 - Keep `tmp`, `temp`, `tmp/worktrees`, and `temp/worktrees` ignored in the repository-root `.gitignore`. Do not commit files from those directories.
 - Relocate or remove a worktree only when the operator explicitly requests it. Before removal, preserve and publish intended changes, verify its commit is represented on the target branch, and confirm there are no tracked, untracked, ignored-sensitive, or in-use files that must survive. Remove it with `git worktree remove <path>` without `--force`; never delete a worktree directory with `rm`.
+
+## Rust-only scripts and tests (organization direction)
+
+**Do not create Python scripts, test harnesses, code generators, CI/release
+helpers, maintenance tools, or workflow inline Python in `daedalus-fab`.**
+Use Rust CLIs, Rust tests (`cargo test`), or `cargo xtask` instead. Small
+shell/YAML wrappers may invoke the Rust binary but must not replace it with
+complex shell logic.
+
+Keep any existing Python automation operational until a behaviorally equivalent
+Rust implementation has passed positive and negative tests, exact-head CI,
+security/compatibility checks, and downstream integration checks. Track the
+migration debt; do not disable a gate or delete a working script before parity.
+Python *application* code is an exceptional, explicitly reviewed and documented
+product-level choice, not permission for Python test/CI scripting.
+
+`daedalus-fab/.github` is the source for this guidance; GitHub does not
+automatically enforce agent instructions or CI policy in sibling repositories.
+Roll out a locally pinned check in each adopting repository.
