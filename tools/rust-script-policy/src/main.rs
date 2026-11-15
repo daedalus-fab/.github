@@ -84,9 +84,10 @@ fn action_reference_error(value: &str) -> Option<String> {
         return None;
     }
     if let Some(container) = value.strip_prefix("docker://") {
-        let (image, digest) = container.rsplit_once("@sha256:")?;
-        if !image.is_empty() && is_hex(digest, 64) {
-            return None;
+        if let Some((image, digest)) = container.rsplit_once("@sha256:") {
+            if !image.is_empty() && is_hex(digest, 64) {
+                return None;
+            }
         }
         return Some(format!("Docker action must use an immutable sha256 digest: {value}"));
     }
