@@ -18,6 +18,19 @@ const LEGACY_PYTHON: &[&str] = &[
     "scripts/validate_workflow_security.py",
 ];
 
+// Existing Python workflow entrypoints pending parity-tested Rust ports.
+// Any new inline Python must fail even if it lives beside an older command.
+const LEGACY_WORKFLOW_PYTHON: &[(&str, &str)] = &[
+    (
+        ".github/workflows/repository-relationships.yml",
+        "run: python3 scripts/validate_repository_relationships.py .",
+    ),
+    (
+        ".github/workflows/reusable-policy.yml",
+        "shell: python",
+    ),
+];
+
 fn is_python_automation(path: &str) -> bool {
     path.ends_with(".py") || path.ends_with(".pyw")
 }
@@ -106,11 +119,27 @@ fn validate_workflow_text(label: &str, content: &str) -> Vec<String> {
     for (index, line) in content.lines().enumerate() {
         let trimmed = line.trim_start();
         let normalized = trimmed.strip_prefix("- ").unwrap_or(trimmed);
-        let Some(value) = normalized.strip_prefix("uses:") else {
-            continue;
-        };
-        if let Some(error) = action_reference_error(value) {
-            errors.push(format!("{label}:{}: {error}", index + 1));
+        let command = normalized.trim();
+        let inline_python = command == "shell: python"
+            || command == "shell: python3"
+            || command.starts_with("run: python ")
+            || command.starts_with("run: python3 ")
+            || command.starts_with("python ")
+            || command.starts_with("python3 ");
+        if inline_python
+            && !LEGACY_WORKFLOW_PYTHON
+                .iter()
+                .any(|(file, legacy)| *file == label && *legacy == command)
+        {
+            errors.push(format!(
+                "{label}:{}: new Python workflow scripting is forbidden; use a Rust CLI",
+                index + 1
+            ));
+        }
+        if let Some(value) = normalized.strip_prefix("uses:") {
+            if let Some(error) = action_reference_error(value) {
+                errors.push(format!("{label}:{}: {error}", index + 1));
+            }
         }
     }
     errors
@@ -273,6 +302,35 @@ mod tests {
         assert_eq!(errors.len(), 2);
         assert!(errors[0].contains("ci.yml:4:"));
         assert!(errors[1].contains("ci.yml:6:"));
+    }
+
+    #[test]
+    fn new_inline_python_workflows_are_rejected_but_recorded_legacy_is_preserved() {
+        assert!(validate_workflow_text(
+            ".github/workflows/repository-relationships.yml",
+            "steps:\n  - run: python3 scripts/validate_repository_relationships.py .\n",
+        )
+        .is_empty());
+        assert!(validate_workflow_text(
+            ".github/workflows/reusable-policy.yml",
+            "steps:\n  - shell: python\n",
+        )
+        .is_empty());
+
+        let failures = validate_workflow_text(
+            ".github/workflows/reusable-policy.yml",
+            "steps:\n  - shell: python\n  - run: python3 new_helper.py\n",
+        );
+        assert_eq!(failures.len(), 1);
+        assert!(failures[0].contains("new Python"));
+        assert_eq!(
+            validate_workflow_text(
+                ".github/workflows/another.yml",
+                "steps:\n  - shell: python\n",
+            )
+            .len(),
+            1
+        );
     }
 
     #[test]
