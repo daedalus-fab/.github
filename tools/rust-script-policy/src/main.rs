@@ -89,7 +89,9 @@ fn action_reference_error(value: &str) -> Option<String> {
                 return None;
             }
         }
-        return Some(format!("Docker action must use an immutable sha256 digest: {value}"));
+        return Some(format!(
+            "Docker action must use an immutable sha256 digest: {value}"
+        ));
     }
     match value.rsplit_once('@') {
         Some((action, sha)) if !action.is_empty() && is_hex(sha, 40) => None,
@@ -118,29 +120,31 @@ fn validate_workflows(root: &Path) -> Result<Vec<String>, String> {
     let directory = root.join(".github/workflows");
     let mut paths = fs::read_dir(&directory)
         .map_err(|e| format!("{}: {e}", directory.display()))?
-        .map(|entry| {
-            entry
-                .map(|entry| entry.path())
-                .map_err(|e| e.to_string())
-        })
+        .map(|entry| entry.map(|entry| entry.path()).map_err(|e| e.to_string()))
         .collect::<Result<Vec<_>, _>>()?;
     paths.sort();
     let mut failures = Vec::new();
     for path in paths {
-        if !matches!(path.extension().and_then(|ext| ext.to_str()), Some("yml" | "yaml")) {
+        if !matches!(
+            path.extension().and_then(|ext| ext.to_str()),
+            Some("yml" | "yaml")
+        ) {
             continue;
         }
-        let content = fs::read_to_string(&path)
-            .map_err(|err| format!("{}: {err}", path.display()))?;
-        let name = path.strip_prefix(root).unwrap_or(&path).display().to_string();
+        let content =
+            fs::read_to_string(&path).map_err(|err| format!("{}: {err}", path.display()))?;
+        let name = path
+            .strip_prefix(root)
+            .unwrap_or(&path)
+            .display()
+            .to_string();
         failures.extend(validate_workflow_text(&name, &content));
     }
     Ok(failures)
 }
 
 fn validate_json(path: &Path) -> Result<(), String> {
-    let contents =
-        fs::read_to_string(path).map_err(|err| format!("{}: {err}", path.display()))?;
+    let contents = fs::read_to_string(path).map_err(|err| format!("{}: {err}", path.display()))?;
     serde_json::from_str::<serde_json::Value>(&contents)
         .map(|_| ())
         .map_err(|err| format!("invalid JSON at {}: {err}", path.display()))
@@ -196,7 +200,10 @@ mod tests {
     use super::*;
 
     fn legacy_file_list() -> Vec<String> {
-        LEGACY_PYTHON.iter().map(|path| (*path).to_string()).collect()
+        LEGACY_PYTHON
+            .iter()
+            .map(|path| (*path).to_string())
+            .collect()
     }
 
     #[test]
@@ -207,12 +214,23 @@ mod tests {
     #[test]
     fn new_python_tests_and_scripts_are_rejected_without_suppressing_legacy() {
         let mut paths = legacy_file_list();
-        paths.extend(["scripts/new_fixture.py", "tests/test_auth.py", "tools/run.pyw"]
-            .iter().map(|path| (*path).to_string()));
+        paths.extend(
+            [
+                "scripts/new_fixture.py",
+                "tests/test_auth.py",
+                "tools/run.pyw",
+            ]
+            .iter()
+            .map(|path| (*path).to_string()),
+        );
         let errors = validate_python_file_list(&paths);
         assert_eq!(errors.len(), 3);
-        assert!(errors.iter().any(|error| error.contains("tests/test_auth.py")));
-        assert!(errors.iter().any(|error| error.contains("scripts/new_fixture.py")));
+        assert!(errors
+            .iter()
+            .any(|error| error.contains("tests/test_auth.py")));
+        assert!(errors
+            .iter()
+            .any(|error| error.contains("scripts/new_fixture.py")));
         assert!(errors.iter().any(|error| error.contains("tools/run.pyw")));
     }
 
@@ -259,10 +277,8 @@ mod tests {
 
     #[test]
     fn invalid_json_is_a_failing_validation() {
-        let path = std::env::temp_dir().join(format!(
-            "rust-script-policy-invalid-{}.json",
-            process::id()
-        ));
+        let path =
+            std::env::temp_dir().join(format!("rust-script-policy-invalid-{}.json", process::id()));
         // Avoid filesystem fixture collisions; parse JSON directly for the negative test.
         let _ = path;
         assert!(serde_json::from_str::<serde_json::Value>("{broken").is_err());
