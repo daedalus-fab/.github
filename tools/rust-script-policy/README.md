@@ -10,7 +10,7 @@ cargo run --quiet --manifest-path tools/rust-script-policy/Cargo.toml -- all .
 ```
 
 Commands: `scripts <root>` rejects new tracked `.py`/`.pyw` files;
-`workflows <root>` checks immutable external Action/Docker pins;
+`workflows <root>` checks immutable external Action/Docker pins and rejects new\ninline Python steps;
 `json <file>` validates JSON syntax; `all <root>` runs all three.
 
 ## Python automation migration inventory
@@ -24,7 +24,7 @@ Four existing scripts are temporarily grandfathered **only in the public
 - `scripts/validate_workflow_security.py` — immutable action pins (the live
   workflow migrates to this Rust CLI)
 
-New Python scripts/tests are forbidden; shrink the Rust allowlist as each
+The two still-active Python workflow commands in\n`repository-relationships.yml` and `reusable-policy.yml` have exact-match\nlegacy exceptions. New inline Python in any workflow is forbidden.\n\nNew Python scripts/tests are forbidden; shrink the Rust allowlist as each
 script is replaced. Preserve contract behavior and negative tests before
 retiring existing tooling. Python application code needs an explicitly
 reviewed exception in its owning product repository. Organization-wide policy
