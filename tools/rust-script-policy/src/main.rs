@@ -25,10 +25,7 @@ const LEGACY_WORKFLOW_PYTHON: &[(&str, &str)] = &[
         ".github/workflows/repository-relationships.yml",
         "run: python3 scripts/validate_repository_relationships.py .",
     ),
-    (
-        ".github/workflows/reusable-policy.yml",
-        "shell: python",
-    ),
+    (".github/workflows/reusable-policy.yml", "shell: python"),
 ];
 
 fn is_python_automation(path: &str) -> bool {
