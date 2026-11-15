@@ -30,12 +30,14 @@ jobs:
             CODE_OF_CONDUCT.md
             GOVERNANCE.md
             AGENTS.md
+            agents.md
+            tools/rust-script-policy/Cargo.toml
             repository-relationships.json
             organization-policy.json
           )
           for file in "${required[@]}"; do
             test -s "$file" || { echo "::error file=$file::required baseline file is missing or empty"; exit 1; }
           done
-          python3 -m json.tool organization-policy.json >/dev/null
-          python3 -m json.tool repository-relationships.json >/dev/null
+          cargo run --quiet --manifest-path tools/rust-script-policy/Cargo.toml -- json organization-policy.json
+          cargo run --quiet --manifest-path tools/rust-script-policy/Cargo.toml -- json repository-relationships.json
           ! git grep -nE '^(<<<<<<<|=======|>>>>>>>)' -- . ':!*.lock'
