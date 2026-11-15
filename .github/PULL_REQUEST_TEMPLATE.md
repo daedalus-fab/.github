@@ -55,5 +55,6 @@ List exact commands, environments, and results. Include unit, integration, contr
 - [ ] External Actions pinned to full commit SHAs
 - [ ] Explicit least-privilege workflow permissions and timeouts
 - [ ] No credentials, private data, or sensitive logs included
+- [ ] New tests and automation are Rust (`cargo test` / Rust CLI / `cargo xtask`), not Python; legacy Python migrations preserve behavior.
 - [ ] Authoritative remote branch/PR/check evidence verified
 <!-- ore-org-baseline:end -->
